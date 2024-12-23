@@ -15,5 +15,5 @@ gem "heroicons-rails"
 ## Usage
 
 ```ruby
-<%= render HeroiconsRails::IconComponent.new(name: "heroicon-name", size: 16, style: "solid", classes: ["text-red-500"]) %>
+<%= render HeroiconsRails::IconComponent.new("academic-cap", size: 16, style: "solid", classes: ["text-red-500"]) %>
 ```
