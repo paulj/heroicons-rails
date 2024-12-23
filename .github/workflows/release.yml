@@ -1,0 +1,37 @@
+name: Release Gem
+
+on:
+  push:
+    tags:
+      - 'v*' # Triggers on version tags like v1.0.0
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.2'
+          bundler-cache: true
+
+      - name: Cache icons
+        run: rake fetch_icons
+
+      - name: Build gem
+        run: gem build *.gemspec
+
+      - name: Push to GitHub Packages
+        run: |
+          mkdir -p $HOME/.gem
+          echo ":github: Bearer ${GITHUB_TOKEN}" >> $HOME/.gem/credentials
+          chmod 0600 $HOME/.gem/credentials
+          gem push --KEY github --host https://rubygems.pkg.github.com/$GITHUB_REPOSITORY_OWNER *.gem
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
