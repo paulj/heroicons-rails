@@ -1,0 +1,6 @@
+class HeroiconsRails
+  HEROICONS_VERSION = "2.2.0"
+  PACKAGE_VERSION = "1"
+
+  VERSION = "#{HEROICONS_VERSION}.#{PACKAGE_VERSION}"
+end
